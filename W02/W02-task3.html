@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate the area of a triangle</title>
+</head>
+<body>
+
+<h2>Calculate the area of a triangle</h2>
+<p>Please input coordinates of the three vertices</p>
+v1_x:<input type="number" id="v1_x"> v1_y:<input type="number" id="v1_y"> v1_z:<input type="number" id="v1_z"><br>
+v2_x:<input type="number" id="v2_x"> v2_y:<input type="number" id="v2_y"> v2_z:<input type="number" id="v2_z"><br>
+v3_x:<input type="number" id="v3_x"> v3_y:<input type="number" id="v3_y"> v3_z:<input type="number" id="v3_z"><br>
+
+<button type="button" onclick="writeAnswer()">Calculation</button>
+<br>
+area of above triangle : <p id="answer"></p>
+
+<script>
+
+    //入力フォームからの数値受け入れ
+    function getInputNumber() {
+        let v1_x, v1_y, v1_z;
+        let v2_x, v2_y, v2_z;
+        let v3_x, v3_y, v3_z;
+        v1_x = document.getElementById("v1_x").value;
+        v1_y = document.getElementById("v1_y").value;
+        v1_z = document.getElementById("v1_z").value;
+        v2_x = document.getElementById("v2_x").value;
+        v2_y = document.getElementById("v2_y").value;
+        v2_z = document.getElementById("v2_z").value;
+        v3_x = document.getElementById("v3_x").value;
+        v3_y = document.getElementById("v3_y").value;
+        v3_z = document.getElementById("v3_z").value;
+        return [[v1_x, v1_y, v1_z], [v2_x, v2_y, v2_z], [v3_x, v3_y, v3_z]];
+    }
+
+    //ベクトルクラス　無いほうが話が早い
+    class Vec3 {
+        constructor(array) {
+            this.array = array
+        }
+    }
+
+    //二つの位置ベクトルの距離を求める
+    function calcEuclideanDistance(v1, v2){
+        let v1to2 = [v1.array[0] - v2.array[0], v1.array[1] - v2.array[1], v1.array[2] - v2.array[2]];
+        return Math.sqrt( Math.pow(v1to2[0], 2 ) + Math.pow(v1to2[1], 2 ) + Math.pow(v1to2[2], 2 ))
+    }
+
+    //ヘロンの公式により、３辺の長さから面積を求める
+    function AreaOfTriangle() {
+        let [v1, v2, v3] = getInputNumber();  //値取得
+        let vec1 = new Vec3(v1);  //3つのベクトルを作成
+        let vec2 = new Vec3(v2);
+        let vec3 = new Vec3(v3);
+        // document.write(v1.toString() + "<br>" + v2.toString() + "<br>" + v3.toString());
+        let dis12 = calcEuclideanDistance(vec1, vec2);  //各ベクトル間の距離
+        let dis23 = calcEuclideanDistance(vec2, vec3);
+        let dis31 = calcEuclideanDistance(vec3, vec1);
+        // document.write(dis12.toString() + "<br>" + dis23.toString() + "<br>" + dis31.toString());
+        let s = 0.5*(dis12 + dis23 + dis31);
+        return Math.sqrt(s*(s-dis12)*(s-dis23)*(s-dis31));
+    }
+
+    //数値表示用関数
+    function writeAnswer(){
+        let answer = AreaOfTriangle();
+        document.getElementById("answer").innerHTML = answer.toFixed(4).toString();
+    }
+
+</script>
+</body>
+</html>

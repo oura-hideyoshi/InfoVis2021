@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post">
+  Name: <input type="text" name="fname">
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+    class Vec3 {
+        constructor(x, y, z) {
+            this.array = [x, y, z]
+            this.array.sort(function (a, b) {
+                return a - b
+            })
+        }
+
+        min() {
+            return this.array[0];
+        }
+
+        mid() {
+            return this.array[1];
+        }
+
+        max() {
+            return this.array[2];
+        }
+    }
+
+    var x = 5, y = 4, z = 8;
+    var v = new Vec3(x, y, z);
+    var min = v.min();
+    var mid = v.mid();
+    var max = v.max();
+    var txt = "min : " + min.toString() + "<br>" +
+        "mid : " + mid.toString() + "<br>" +
+        "max : " + max.toString() + "<br>";
+    document.write(txt);
+</script>
+</body>
+</html>
