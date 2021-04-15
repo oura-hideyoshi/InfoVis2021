@@ -35,29 +35,35 @@ area of above triangle : <p id="answer"></p>
         return [[v1_x, v1_y, v1_z], [v2_x, v2_y, v2_z], [v3_x, v3_y, v3_z]];
     }
 
-    //ベクトルクラス　無いほうが話が早い
+    //3Dベクトルクラス
     class Vec3 {
-        constructor(array) {
-            this.array = array
+        constructor(_x, _y, _z) {
+            this.x = _x;
+            this.y = _y;
+            this.z = _z;
         }
-    }
 
-    //二つの位置ベクトルの距離を求める
-    function calcEuclideanDistance(v1, v2){
-        let v1to2 = [v1.array[0] - v2.array[0], v1.array[1] - v2.array[1], v1.array[2] - v2.array[2]];
-        return Math.sqrt( Math.pow(v1to2[0], 2 ) + Math.pow(v1to2[1], 2 ) + Math.pow(v1to2[2], 2 ))
+        //引数のベクトルとの差分を求める
+        sub(_v){
+            return new Vec3(this.x - _v.x, this.y - _v.y, this.z - _v.z);
+        }
+
+        //このベクトルのL2ノルムを返す
+        norm(){
+            return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
+        }
     }
 
     //ヘロンの公式により、３辺の長さから面積を求める
     function AreaOfTriangle() {
         let [v1, v2, v3] = getInputNumber();  //値取得
-        let vec1 = new Vec3(v1);  //3つのベクトルを作成
-        let vec2 = new Vec3(v2);
-        let vec3 = new Vec3(v3);
         // document.write(v1.toString() + "<br>" + v2.toString() + "<br>" + v3.toString());
-        let dis12 = calcEuclideanDistance(vec1, vec2);  //各ベクトル間の距離
-        let dis23 = calcEuclideanDistance(vec2, vec3);
-        let dis31 = calcEuclideanDistance(vec3, vec1);
+        let vec1 = new Vec3(v1[0], v1[1], v1[2]);  //3つのベクトルを作成
+        let vec2 = new Vec3(v2[0], v2[1], v2[2]);
+        let vec3 = new Vec3(v3[0], v3[1], v3[2]);
+        let dis12 = vec2.sub(vec1).norm();  //各ベクトル間の距離
+        let dis23 = vec3.sub(vec2).norm();
+        let dis31 = vec1.sub(vec3).norm();
         // document.write(dis12.toString() + "<br>" + dis23.toString() + "<br>" + dis31.toString());
         let s = 0.5*(dis12 + dis23 + dis31);
         return Math.sqrt(s*(s-dis12)*(s-dis23)*(s-dis31));
