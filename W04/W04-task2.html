@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>W04: task2</title>
+    <meta charset="utf-8">
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style type="text/css">
+        h2 {
+            font-family: "ＭＳ 明朝";
+        }
+
+        text {
+            font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+        }
+
+        svg {
+            height: 400px;
+            width: 800px;
+        }
+
+    </style>
+</head>
+
+<body>
+<h2>日本のコロナ新規感染者数('21/4/1 - '21/4/20)</h2>
+
+<script>
+
+    var svg = d3.select("body").append("svg");
+    d3.csv("pcr_positive_daily.csv", function (error, data) {
+        // console.log(data)
+        let margin = 20
+        let width_txt = 80;
+        let height_row = 20;
+        let thick_chart = 5;
+        let width_chart = 600;
+        thick_chart = height_row - thick_chart;
+        let max = data.reduce((a, b) => a.num > b.num ? a : b).num
+        // console.log(max);
+        // console.log(data);
+
+        svg.selectAll("text.date")
+            .data(data)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return d.date
+            })
+            .attr("x", margin)
+            .attr("y", function (d, i) {
+                return margin + height_row * i;
+            })
+
+        svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", margin + width_txt)
+            .attr("y", function (d, i) {
+                return (margin + height_row * (i - 1) + thick_chart / 1.2)
+            })
+            .attr("width", function (d) {
+                return (d.num / max) * width_chart
+            })
+            .attr("height", height_row - thick_chart)
+            .attr("fill", function(d){
+                return  d.num > 3500 ? "lightslategray" : "darkgray"
+            })
+
+        svg.selectAll("text.num")
+            .data(data)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return d.num
+            })
+            .attr("x", function(d){return 10 + margin + width_txt + (d.num / max) * width_chart})
+            .attr("y", function (d, i) {
+                return  margin + height_row * i ;
+            })
+    });
+
+</script>
+</body>
+</html>
