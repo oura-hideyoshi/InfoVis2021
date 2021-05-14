@@ -48,7 +48,7 @@ class PieChart {
             .attr("text-anchor", "middle")
             .attr("font-size", "20pt")
             .attr("font-weight", "bold")
-            .text("近畿の人口[人]");
+            .text("近畿の人口[千人](平成29年時点)");
     }
 
     //値の更新
