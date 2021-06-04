@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Final Task</title>
+    <style>
+        body {
+            font-family: system-ui;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .bar.active {
+            stroke: #000;
+        }
+
+        #tooltip {
+            position: absolute;
+            opacity: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+        }
+
+        .tooltip-label {
+            font-weight: 500;
+            font-size: 11px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+<h2>Relation between "Rainy season" and "Global warming"</h2>
+<div id="tooltip"></div>
+<div class="container">
+    <div>
+        <svg id="drawing_region_warming_line_graph"></svg>
+    </div>
+    <div>
+        <svg id="drawing_region_tsuyu_line_graph"></svg>
+    </div>
+</div>
+<div class="container">
+    <div>
+        <svg id="drawing_region_scatter_plot"></svg>
+    </div>
+    <div>
+        <text style="font-size: 30px">Correlation coefficient ( begin of Rainy season ) :</text>
+        <text id = "CoCoff_being" style="font-size: 30px"></text><br>
+        <text style="font-size: 30px;">Correlation coefficient ( end of Rainy season ) :</text>
+        <text id = "CoCoff_end" style="font-size: 30px"></text><br>
+    </div>
+</div>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://unpkg.com/simple-statistics@7.0.2/dist/simple-statistics.min.js"></script>
+<script src="WarmingLineGraph.js"></script>
+<script src="TsuyuLineGraph.js"></script>
+<script src="CovarianceScatterPlot.js"></script>
+<script src="main.js"></script>
+<script src="calcCovariance.js"></script>
+</body>
+
+</html>
